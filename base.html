@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'learning_emporium/main.css' %}">
+
+    {% if title %}
+        <title>Education Laser - {{ title }}</title>
+    {% else %}
+        <title>Education Laser</title>
+    {% endif %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="main.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/">Education Laser</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="/">Home</a>
+                        <a class="nav-item nav-link" href="/about">About</a>
+                        {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="#">Logged in as: {{ user.username }}</a>
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_superuser %}
+                          <a class="nav-item nav-link" href="#">P:SU</h5></a>
+            
+                        {% elif user.is_authenticated and user.is_admin %}
+                          <a class="nav-item nav-link" href="#">P:A</h5></a>
+            
+                        {% elif user.is_authenticated and user.is_teacher %}
+                          <a class="nav-item nav-link" href="#">P:T</h5></a>
+            
+                        {% elif user.is_authenticated and user.is_student %}
+                          <a class="nav-item nav-link" href="#">P:S</h5></a>
+                        {% endif %}
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated %}
+                          <a class="nav-item nav-link" href="#">Profile</a>
+                          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                          <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+
+            {% block content %}
+            {% endblock content%}
+
+
+          </div>
+          <div class="col-md-4">
+            <div class="content-section">
+              <h3>Navigate</h3>
+              <p class='text-muted'>Click here to do stuff
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-light"><a href="#">Calendar</a></li>
+                  {% if user.is_authenticated and user.is_admin or user.is_authenticated and user.is_teacher %}
+                  <li class="list-group-item list-group-item-light"><a href="{% url 'class-create' %}">Create Class Model</a></li>
+                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-classes' %}">All Classes</a></li>
+                  {% endif %}
+                  {% if user.is_authenticated and user.is_admin %}
+                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-assignments' %}">All Assignments</a></li>
+                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-scheduled-classes' %}">All Scheduled Classes</a></li>
+                  {% endif %}
+                  {% if user.is_authenticated and user.is_teacher %}
+                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-assignments' %}">Current Assignments</a></li>                  
+                  <li class="list-group-item list-group-item-light"><a href="{% url 'create_questions' %}">Create Questions</a></li>                  
+                  <li class="list-group-item list-group-item-light"><a href="#">Grade Assignments</a></li>                  
+                  {% endif %}
+                  {% if user.is_authenticated and user.is_student %}
+                  <li class="list-group-item list-group-item-light"><a href="#">Assignments</a></li>
+                  {% else %}
+                  {% endif %}
+                  <li class="list-group-item list-group-item-light"><a href="#">Webpage</a></li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+  
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
