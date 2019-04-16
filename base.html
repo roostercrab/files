@@ -10,13 +10,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <link rel="stylesheet" type="text/css" href="{% static 'learning_emporium/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'my_project/main.css' %}">
 
-    {% if title %}
-        <title>Education Laser - {{ title }}</title>
-    {% else %}
-        <title>Education Laser</title>
-    {% endif %}
+        <title>Password Vault</title>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="main.js"></script>
@@ -25,7 +22,7 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="/">Education Laser</a>
+                <a class="navbar-brand mr-4" href="/">Password Vault</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -33,31 +30,6 @@
                     <div class="navbar-nav mr-auto">
                         <a class="nav-item nav-link" href="/">Home</a>
                         <a class="nav-item nav-link" href="/about">About</a>
-                        {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="#">Logged in as: {{ user.username }}</a>
-                        {% endif %}
-                        {% if user.is_authenticated and user.is_superuser %}
-                          <a class="nav-item nav-link" href="#">P:SU</h5></a>
-            
-                        {% elif user.is_authenticated and user.is_admin %}
-                          <a class="nav-item nav-link" href="#">P:A</h5></a>
-            
-                        {% elif user.is_authenticated and user.is_teacher %}
-                          <a class="nav-item nav-link" href="#">P:T</h5></a>
-            
-                        {% elif user.is_authenticated and user.is_student %}
-                          <a class="nav-item nav-link" href="#">P:S</h5></a>
-                        {% endif %}
-                    </div>
-                    <!-- Navbar Right Side -->
-                    <div class="navbar-nav">
-                        {% if user.is_authenticated %}
-                          <a class="nav-item nav-link" href="#">Profile</a>
-                          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                        {% else %}
-                          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                          <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -85,25 +57,8 @@
               <h3>Navigate</h3>
               <p class='text-muted'>Click here to do stuff
                 <ul class="list-group">
-                  <li class="list-group-item list-group-item-light"><a href="#">Calendar</a></li>
-                  {% if user.is_authenticated and user.is_admin or user.is_authenticated and user.is_teacher %}
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'class-create' %}">Create Class Model</a></li>
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-classes' %}">All Classes</a></li>
-                  {% endif %}
-                  {% if user.is_authenticated and user.is_admin %}
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-assignments' %}">All Assignments</a></li>
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-scheduled-classes' %}">All Scheduled Classes</a></li>
-                  {% endif %}
-                  {% if user.is_authenticated and user.is_teacher %}
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'all-assignments' %}">Current Assignments</a></li>                  
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'create_questions' %}">Create Questions</a></li>                  
-                  <li class="list-group-item list-group-item-light"><a href="#">Grade Assignments</a></li>                  
-                  {% endif %}
-                  {% if user.is_authenticated and user.is_student %}
-                  <li class="list-group-item list-group-item-light"><a href="#">Assignments</a></li>
-                  {% else %}
-                  {% endif %}
-                  <li class="list-group-item list-group-item-light"><a href="#">Webpage</a></li>
+                  <li class="list-group-item list-group-item-light"><a href="#">Thing CLICK</a></li>
+                  <li class="list-group-item list-group-item-light"><a href="#">Stuff Link</a></li>
                 </ul>
               </p>
             </div>
